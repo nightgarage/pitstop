@@ -362,7 +362,10 @@ export function FuelUpForm({
               value={GRADE_PRESETS.includes(grade) ? "" : grade}
               onChange={(e) => setGrade(e.target.value)}
               placeholder="other"
-              className="w-20 rounded-full bg-surface2 px-3.5 py-2 text-[13px] text-text outline-none placeholder:text-muted/60"
+              // 16px (not 13px like the pills beside it) so iOS doesn't zoom on
+              // focus; the tighter padding and matching border keep it the
+              // same height as those pills
+              className="w-20 rounded-full border border-transparent bg-surface2 px-3.5 py-1.5 text-[16px] text-text outline-none placeholder:text-muted/60"
             />
           </div>
         </Field>

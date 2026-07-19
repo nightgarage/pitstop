@@ -33,8 +33,10 @@ export function Field({ label, children, hint }: { label: string; children: Reac
   );
 }
 
+// Keep text-entry controls at 16px or larger: iOS Safari zooms the whole page
+// when you focus a field with smaller text, and doesn't zoom back out.
 const controlClass =
-  "w-full rounded-control bg-surface2 px-3.5 py-3 text-[15px] text-text placeholder:text-muted/60 " +
+  "w-full rounded-control bg-surface2 px-3.5 py-3 text-[16px] text-text placeholder:text-muted/60 " +
   "outline-none border border-transparent focus:border-accent/60 transition-colors";
 
 export function Input(props: InputHTMLAttributes<HTMLInputElement>) {
