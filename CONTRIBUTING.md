@@ -23,3 +23,8 @@ FastAPI backend runs on :8000, the Vite dev server on :5173 with a proxy.
 - **Frontend:** `npm run build` from `frontend/` must pass clean (it
   type-checks).
 - Conventional commit messages (`feat:`, `fix:`, `chore:`).
+
+## License
+
+Pitstop is [AGPL-3.0](LICENSE). By contributing you agree your work is
+licensed under the same terms.

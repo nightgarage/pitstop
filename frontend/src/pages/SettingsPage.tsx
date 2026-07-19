@@ -309,10 +309,29 @@ export default function SettingsPage({ user }: { user: User }) {
           </Button>
         </Card>
 
-        <p className="px-1 text-center text-[12px] text-muted">
-          Pitstop · API docs at{" "}
+        {/* AGPL §13: people using a hosted instance must be able to get the source */}
+        <p className="px-1 text-center text-[12px] leading-relaxed text-muted">
+          Pitstop · free software under{" "}
+          <a
+            href="https://www.gnu.org/licenses/agpl-3.0.html"
+            className="text-accent"
+            target="_blank"
+            rel="noreferrer"
+          >
+            AGPL-3.0
+          </a>
+          <br />
+          <a
+            href="https://github.com/nightgarage/pitstop"
+            className="text-accent"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Source code
+          </a>{" "}
+          ·{" "}
           <a href="/api/docs" className="text-accent" target="_blank" rel="noreferrer">
-            /api/docs
+            API docs
           </a>
         </p>
       </div>

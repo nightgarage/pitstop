@@ -29,7 +29,7 @@ built to run just as happily on a bare VM or LXC.
 | **Auth** | Local accounts; optional OIDC + reverse-proxy header (Cloudflare Access) |
 | **Design** | Dark-first, minimal, Tesla / Starlink-inspired |
 | **Accent color** | Electric blue `#3B9EFF` |
-| **License** | MIT |
+| **License** | AGPL-3.0 |
 | **Standout feature** | Per-grade cost-per-mile comparison + a live "which grade to buy" advisor |
 
 ---

@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "pitstop"
 version = "0.1.0"
 description = "Self-hosted fuel & maintenance tracker"
-license = "MIT"
+license = "AGPL-3.0-or-later"
 requires-python = ">=3.12"
 dependencies = [
     "fastapi>=0.115",

@@ -4,7 +4,7 @@
 
 **A self-hosted fuel & maintenance tracker you actually own.**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-3B9EFF.svg)](LICENSE)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-3B9EFF.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/status-beta-30D158.svg)](#status)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-30D158.svg)](CONTRIBUTING.md)
 
@@ -146,4 +146,10 @@ claim it. Please keep changes aligned with the design doc.
 
 ## License
 
-[MIT](LICENSE) © 2026 Pitstop contributors
+[AGPL-3.0](LICENSE) © 2026 Pitstop contributors
+
+In plain terms: **self-hosting Pitstop is completely unrestricted** — run it,
+modify it, use it for anything, personal or at work, no obligations. The
+copyleft only bites if you distribute a modified version or offer one to
+others as a network service; then you have to publish your changes under the
+same license. It's here so Pitstop stays open, not to get in your way.
