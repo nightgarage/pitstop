@@ -5,9 +5,12 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0A0A0B" />
-    <!-- iOS home-screen install: full-screen, dark status bar over our own background -->
+    <!-- iOS home-screen install. Deliberately NOT black-translucent: that makes the
+         web view extend under the status bar, so the app has to reserve ~59px for it
+         and the content visibly sinks. "black" lets iOS own the status bar (our
+         theme-color matches it), and content starts right beneath. -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="apple-mobile-web-app-title" content="Pitstop" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>Pitstop</title>
