@@ -38,14 +38,15 @@ function secondaryLine(reminder: Reminder): string {
   if (reminder.status === "overdue" && reminder.next_due_odometer != null) {
     return `was due at ${num(reminder.next_due_odometer, 0)}`;
   }
+  // keep this short — it shares a row with the reminder name
   const parts: string[] = [];
-  if (reminder.interval_miles != null) parts.push(`every ${num(reminder.interval_miles, 0)} mi`);
-  if (reminder.interval_months != null) parts.push(`every ${num(reminder.interval_months, 0)} mo`);
+  if (reminder.interval_miles != null) parts.push(`${num(reminder.interval_miles, 0)} mi`);
+  if (reminder.interval_months != null) parts.push(`${num(reminder.interval_months, 0)} mo`);
   if (!parts.length && reminder.next_due_date != null) {
     const days = reminder.days_remaining;
     if (days != null && days >= 0) return `in ~${days > 45 ? `${Math.round(days / 30)} months` : `${days} days`}`;
   }
-  return parts.join(" / ") || "one-time";
+  return parts.length ? `every ${parts.join(" / ")}` : "one-time";
 }
 
 function ReminderCard({ reminder }: { reminder: Reminder }) {

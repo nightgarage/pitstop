@@ -152,12 +152,24 @@ def test_demo_seed(make_client, monkeypatch):
         "/api/auth/login", json={"email": "demo@example.com", "password": "pitstop-demo"}
     )
     assert login.status_code == 200
+
+    # a gas vehicle and an EV, so the demo shows both energy paths
     vehicles = client.get("/api/vehicles").json()
-    assert len(vehicles) == 1
-    stats = client.get(f"/api/vehicles/{vehicles[0]['id']}/stats").json()
-    assert stats["fuel"]["lifetime"] is not None
-    grades = client.get(f"/api/vehicles/{vehicles[0]['id']}/grades").json()
+    assert len(vehicles) == 2
+    gas = next(v for v in vehicles if v["energy_type"] == "gasoline")
+    ev = next(v for v in vehicles if v["energy_type"] == "electric")
+
+    gas_stats = client.get(f"/api/vehicles/{gas['id']}/stats").json()
+    assert gas_stats["fuel"]["lifetime"] is not None
+    ev_stats = client.get(f"/api/vehicles/{ev['id']}/stats").json()
+    assert ev_stats["electric"]["lifetime"] is not None
+
+    grades = client.get(f"/api/vehicles/{gas['id']}/grades").json()
     assert grades["verdict"] is not None
+
+    # reminders span all three states so the demo shows the urgency grouping
+    statuses = {r["status"] for r in client.get("/api/reminders").json()}
+    assert statuses == {"overdue", "due", "upcoming"}
 
     # seeding is a no-op once anyone exists
     with Session(get_engine()) as session:
