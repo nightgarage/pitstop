@@ -13,7 +13,11 @@ idea or want to claim an item? Open an issue.
 
 - **First-login walkthrough.** A short guided tour after account creation:
   add your first vehicle, log a fill-up, set a service reminder — so a new
-  user lands somewhere useful instead of an empty garage.
+  user lands somewhere useful instead of an empty garage. It should also
+  cover installing to the home screen, since that's what turns Pitstop into
+  a real full-screen app (and on iOS it's the non-obvious Share → "Add to
+  Home Screen"). Show it only when running in a browser tab, not when
+  already installed — `display-mode: standalone` tells you which.
 
 ## Not yet verified
 
