@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pitstop — Service & Reminders (mockup)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0A0A0B; --surface: #1C1C1E; --surface2: #232326;
+    --text: #F5F5F7; --muted: #8E8E93; --accent: #3B9EFF; --line: #2C2C2E;
+    --good: #30D158; --warn: #FFB020; --bad: #FF453A;
+  }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #000; color: var(--text);
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; padding: 32px 16px 48px; gap: 22px;
+  }
+  h2 { font-size: 18px; font-weight: 600; }
+  .caption { max-width: 420px; text-align: center; color: var(--muted); font-size: 14px; line-height: 1.6; }
+  .caption b { color: var(--text); font-weight: 600; }
+
+  .phone {
+    width: 390px; max-width: 100%; background: var(--bg);
+    border-radius: 44px; border: 10px solid #1a1a1d;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6); overflow: hidden; position: relative;
+  }
+  .screen { padding: 22px 16px 12px; }
+  .head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
+  .head .t { font-size: 26px; font-weight: 800; letter-spacing: -.02em; }
+  .head .add { color: var(--accent); font-size: 14px; font-weight: 600; }
+
+  .grouplbl { font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; margin: 18px 4px 8px; display: flex; align-items: center; gap: 7px; }
+  .grouplbl.bad { color: var(--bad); }
+  .grouplbl.warn { color: var(--warn); }
+  .grouplbl.good { color: var(--muted); }
+  .grouplbl .count { background: var(--surface2); color: var(--muted); font-size: 11px; padding: 1px 7px; border-radius: 999px; }
+
+  .rcard {
+    display: flex; align-items: center; gap: 13px;
+    background: var(--surface); border-radius: 15px; padding: 14px; margin-bottom: 9px;
+    border-left: 3px solid var(--line);
+  }
+  .rcard.bad { border-left-color: var(--bad); }
+  .rcard.warn { border-left-color: var(--warn); }
+  .rcard.good { border-left-color: var(--good); }
+  .ricon { width: 34px; height: 34px; border-radius: 9px; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+  .rname { font-size: 15px; font-weight: 600; }
+  .rsub { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+  .rright { margin-left: auto; text-align: right; }
+  .rwhen { font-size: 14px; font-weight: 700; }
+  .rwhen.bad { color: var(--bad); } .rwhen.warn { color: var(--warn); } .rwhen.good { color: var(--text); }
+  .rwhen2 { color: var(--muted); font-size: 11px; margin-top: 1px; }
+
+  .cta {
+    margin-top: 18px; padding: 15px; border-radius: 14px; border: 1px solid var(--line);
+    background: transparent; color: var(--accent); font-family: inherit;
+    font-size: 15px; font-weight: 700; width: 100%;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+
+  .nav { display: flex; justify-content: space-around; padding: 14px 8px 6px; border-top: 1px solid var(--line); margin-top: 18px; }
+  .nav .item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--muted); font-size: 11px; font-weight: 500; }
+  .nav .item.on { color: var(--accent); }
+  .nav .ic { font-size: 19px; }
+</style>
+</head>
+<body>
+  <h2>Pitstop — service &amp; reminders</h2>
+  <div class="phone">
+    <div class="screen">
+      <div class="head">
+        <div class="t">Service</div>
+        <div class="add">+ Log service</div>
+      </div>
+
+      <!-- OVERDUE -->
+      <div class="grouplbl bad">● Overdue <span class="count">1</span></div>
+      <div class="rcard bad">
+        <div class="ricon">🛞</div>
+        <div>
+          <div class="rname">Tire rotation</div>
+          <div class="rsub">Daily Driver · 2019 Sierra</div>
+        </div>
+        <div class="rright">
+          <div class="rwhen bad">600 mi over</div>
+          <div class="rwhen2">was due at 83,930</div>
+        </div>
+      </div>
+
+      <!-- DUE SOON -->
+      <div class="grouplbl warn">● Due soon <span class="count">1</span></div>
+      <div class="rcard warn">
+        <div class="ricon">🛢️</div>
+        <div>
+          <div class="rname">Oil &amp; filter change</div>
+          <div class="rsub">Daily Driver · 2019 Sierra</div>
+        </div>
+        <div class="rright">
+          <div class="rwhen warn">in 320 mi</div>
+          <div class="rwhen2">~1 week</div>
+        </div>
+      </div>
+
+      <!-- UPCOMING -->
+      <div class="grouplbl good">● Upcoming <span class="count">2</span></div>
+      <div class="rcard good">
+        <div class="ricon">🌬️</div>
+        <div>
+          <div class="rname">Engine air filter</div>
+          <div class="rsub">Commuter · 2016 Civic</div>
+        </div>
+        <div class="rright">
+          <div class="rwhen good">in 3,900 mi</div>
+          <div class="rwhen2">every 30k mi</div>
+        </div>
+      </div>
+      <div class="rcard good">
+        <div class="ricon">📋</div>
+        <div>
+          <div class="rname">Registration renewal</div>
+          <div class="rsub">Commuter · 2016 Civic</div>
+        </div>
+        <div class="rright">
+          <div class="rwhen good">Sep 2026</div>
+          <div class="rwhen2">in ~2 months</div>
+        </div>
+      </div>
+
+      <button class="cta">＋ Add a reminder</button>
+    </div>
+
+    <div class="nav">
+      <div class="item"><span class="ic">▤</span>Garage</div>
+      <div class="item"><span class="ic">⛽</span>Log</div>
+      <div class="item on"><span class="ic">🔧</span>Service</div>
+      <div class="item"><span class="ic">📈</span>Stats</div>
+    </div>
+  </div>
+
+  <div class="caption">
+    Everything you need to service, across all vehicles, sorted by urgency:
+    <b style="color:#FF453A">overdue</b> at the top, then
+    <b style="color:#FFB020">due soon</b>, then <b>upcoming</b>. Reminders work on
+    <b>mileage</b> (every 5k mi), <b>time</b> (every 6 months), or one-offs like a
+    registration date — whichever comes first.
+  </div>
+</body>
+</html>

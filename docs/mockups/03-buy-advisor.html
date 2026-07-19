@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pitstop — Which Grade To Buy (mockup)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0A0A0B; --surface: #1C1C1E; --surface2: #232326;
+    --text: #F5F5F7; --muted: #8E8E93; --accent: #3B9EFF; --line: #2C2C2E;
+    --good: #30D158;
+  }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #000; color: var(--text);
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; padding: 32px 16px 48px; gap: 22px;
+  }
+  h2 { font-size: 18px; font-weight: 600; }
+  .caption { max-width: 420px; text-align: center; color: var(--muted); font-size: 14px; line-height: 1.6; }
+  .caption b { color: var(--text); font-weight: 600; }
+  .caption .blue { color: var(--accent); font-weight: 600; }
+
+  .phone {
+    width: 390px; max-width: 100%; background: var(--bg);
+    border-radius: 44px; border: 10px solid #1a1a1d;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6); overflow: hidden;
+  }
+  .screen { padding: 20px 16px 12px; }
+  .crumb { color: var(--muted); font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+  .h1 { font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+  .station { color: var(--muted); font-size: 13px; margin: 3px 0 16px; display: flex; align-items: center; gap: 6px; }
+  .station .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+
+  .hint { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+
+  .rows { display: flex; flex-direction: column; gap: 10px; }
+  .grow {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--surface); border-radius: 16px; padding: 12px 14px;
+    border: 1.5px solid transparent; position: relative;
+  }
+  .grow.win { border-color: var(--accent); background: rgba(59,158,255,0.07); }
+  .oct { font-size: 24px; font-weight: 800; width: 40px; letter-spacing: -.02em; }
+  .pricewrap { display: flex; flex-direction: column; }
+  .priceinput {
+    background: var(--surface2); border: 1px solid var(--line); border-radius: 10px;
+    padding: 8px 12px; font-family: inherit; font-size: 20px; font-weight: 700;
+    color: var(--text); width: 110px; letter-spacing: -.01em;
+  }
+  .grow.win .priceinput { border-color: rgba(59,158,255,0.5); }
+  .priceinput .cur { color: var(--muted); }
+  .plabel { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin: 0 0 4px 2px; }
+  .right { margin-left: auto; text-align: right; }
+  .cpm { font-size: 19px; font-weight: 700; letter-spacing: -.01em; }
+  .cpmsub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .pill {
+    position: absolute; top: -9px; right: 12px;
+    background: var(--accent); color: #001427;
+    font-size: 10px; font-weight: 800; padding: 3px 9px; border-radius: 999px;
+  }
+
+  .verdict {
+    margin-top: 16px; background: var(--surface); border-radius: 16px; padding: 16px;
+    border-left: 3px solid var(--good);
+  }
+  .verdict .big { font-size: 16px; font-weight: 700; }
+  .verdict .big .g { color: var(--good); }
+  .verdict .why { font-size: 12.5px; color: var(--muted); line-height: 1.55; margin-top: 6px; }
+  .verdict .why b { color: var(--text); font-weight: 600; }
+
+  .cta {
+    margin-top: 14px; padding: 15px; border-radius: 14px; border: none;
+    background: var(--accent); color: #001427; font-family: inherit;
+    font-size: 16px; font-weight: 700; width: 100%; cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <h2>Pitstop — “which grade should I buy?” advisor</h2>
+  <div class="phone">
+    <div class="screen">
+      <div class="crumb">Fill-up › Which grade?</div>
+      <div class="h1">Which should I buy?</div>
+      <div class="station"><span class="dot"></span>2019 Sierra · Shell on Main St</div>
+
+      <div class="hint">Punch in today's posted prices — I'll use your truck's own MPG for each grade.</div>
+
+      <div class="rows">
+        <div class="grow win">
+          <span class="pill">✓ BUY THIS</span>
+          <span class="oct">87</span>
+          <div class="pricewrap">
+            <div class="plabel">today's price</div>
+            <div class="priceinput"><span class="cur">$</span>3.34</div>
+          </div>
+          <div class="right">
+            <div class="cpm">11.9¢<span style="font-size:12px;color:var(--muted)">/mi</span></div>
+            <div class="cpmsub">your 28.1 MPG</div>
+          </div>
+        </div>
+
+        <div class="grow">
+          <span class="oct">89</span>
+          <div class="pricewrap">
+            <div class="plabel">today's price</div>
+            <div class="priceinput"><span class="cur">$</span>3.64</div>
+          </div>
+          <div class="right">
+            <div class="cpm">12.8¢<span style="font-size:12px;color:var(--muted)">/mi</span></div>
+            <div class="cpmsub">your 28.5 MPG</div>
+          </div>
+        </div>
+
+        <div class="grow">
+          <span class="oct">91</span>
+          <div class="pricewrap">
+            <div class="plabel">today's price</div>
+            <div class="priceinput"><span class="cur">$</span>3.94</div>
+          </div>
+          <div class="right">
+            <div class="cpm">13.6¢<span style="font-size:12px;color:var(--muted)">/mi</span></div>
+            <div class="cpmsub">your 29.0 MPG</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="verdict">
+        <div class="big">Buy <span class="g">87</span> — cheapest to run today.</div>
+        <div class="why">Even though 91 gets you a bit more MPG, it's too pricey to
+          pay off right now. <b>91 would have to drop to about $3.45</b> to beat 87
+          for your truck.</div>
+      </div>
+
+      <button class="cta">Use 87 &amp; log this fill-up →</button>
+    </div>
+  </div>
+
+  <div class="caption">
+    This is the <span class="blue">forward-looking</span> version: today's real
+    prices × your car's <b>measured</b> MPG per grade = the smart pick, right at the
+    pump. The nice touch is the <b>break-even</b> line — it tells you the exact price
+    premium would need to hit before it's ever worth buying.
+  </div>
+</body>
+</html>

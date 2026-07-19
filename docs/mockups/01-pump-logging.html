@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pitstop — Pump Logging Screen (mockup)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0A0A0B;
+    --surface: #1C1C1E;
+    --surface2: #232326;
+    --text: #F5F5F7;
+    --muted: #8E8E93;
+    --accent: #3B9EFF;
+    --line: #2C2C2E;
+  }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #000;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 16px 48px;
+    gap: 24px;
+  }
+  .caption {
+    max-width: 420px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .caption b { color: var(--text); font-weight: 600; }
+  .caption .blue { color: var(--accent); font-weight: 600; }
+
+  /* phone frame */
+  .phone {
+    width: 390px;
+    max-width: 100%;
+    background: var(--bg);
+    border-radius: 44px;
+    border: 10px solid #1a1a1d;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+    overflow: hidden;
+  }
+  .screen { padding: 0 0 12px; }
+
+  /* top bar */
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 20px 8px;
+  }
+  .chev { color: var(--muted); font-size: 22px; width: 28px; }
+  .title { font-size: 17px; font-weight: 600; }
+  .vehicle-pill {
+    background: var(--surface); color: var(--text);
+    border-radius: 999px; padding: 6px 12px; font-size: 13px; font-weight: 500;
+    display: flex; align-items: center; gap: 6px; border: 1px solid var(--line);
+  }
+  .vehicle-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+
+  .fields { padding: 8px 16px 0; display: flex; flex-direction: column; gap: 12px; }
+
+  .field {
+    background: var(--surface); border-radius: 16px; padding: 14px 16px;
+  }
+  .field .lbl { font-size: 12px; color: var(--muted); font-weight: 500; letter-spacing: .02em; text-transform: uppercase; }
+  .field .val {
+    font-size: 30px; font-weight: 700; letter-spacing: -.01em; margin-top: 2px;
+    display: flex; align-items: baseline; gap: 6px;
+  }
+  .field .unit { font-size: 15px; color: var(--muted); font-weight: 500; }
+  .field.focus { border: 1.5px solid var(--accent); }
+  .caret { display:inline-block; width: 2px; height: 28px; background: var(--accent); margin-left: 2px; border-radius: 2px; align-self: center; }
+
+  .row2 { display: flex; gap: 12px; }
+  .row2 .field { flex: 1; }
+
+  .computed { position: relative; }
+  .computed .tag {
+    position: absolute; top: 14px; right: 16px;
+    background: rgba(59,158,255,0.15); color: var(--accent);
+    font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 999px;
+  }
+  .computed .val { color: var(--accent); }
+
+  /* fill type toggle */
+  .seg {
+    display: flex; background: var(--surface); border-radius: 14px; padding: 4px; gap: 4px;
+  }
+  .seg button {
+    flex: 1; border: none; cursor: pointer; font-family: inherit;
+    padding: 12px 0; border-radius: 11px; font-size: 15px; font-weight: 600;
+    background: transparent; color: var(--muted);
+  }
+  .seg button.on { background: var(--accent); color: #001427; }
+
+  .more {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 18px; color: var(--muted); font-size: 15px;
+    background: var(--surface); border-radius: 16px;
+  }
+  .more .plus { color: var(--accent); font-weight: 700; font-size: 20px; }
+
+  .save {
+    margin: 4px 16px 0; padding: 17px; border-radius: 16px; border: none;
+    background: var(--accent); color: #001427; font-family: inherit;
+    font-size: 17px; font-weight: 700; width: calc(100% - 32px); cursor: pointer;
+  }
+
+  /* bottom nav */
+  .nav {
+    display: flex; justify-content: space-around; padding: 14px 8px 6px;
+    border-top: 1px solid var(--line); margin-top: 16px;
+  }
+  .nav .item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--muted); font-size: 11px; font-weight: 500; }
+  .nav .item.on { color: var(--accent); }
+  .nav .ic { font-size: 20px; }
+
+  h2 { font-size: 18px; font-weight: 600; margin-bottom: -8px; }
+</style>
+</head>
+<body>
+  <h2>Pitstop — the pump screen</h2>
+  <div class="phone">
+    <div class="screen">
+      <div class="topbar">
+        <span class="chev">‹</span>
+        <span class="title">Log fuel-up</span>
+        <span class="vehicle-pill"><span class="dot"></span>Daily Driver ▾</span>
+      </div>
+
+      <div class="fields">
+        <!-- 1. Odometer -->
+        <div class="field focus">
+          <div class="lbl">Odometer</div>
+          <div class="val">84,530 <span class="unit">mi</span><span class="caret"></span></div>
+        </div>
+
+        <!-- 2 + 3. Gallons and price, side by side -->
+        <div class="row2">
+          <div class="field">
+            <div class="lbl">Gallons</div>
+            <div class="val">12.4</div>
+          </div>
+          <div class="field">
+            <div class="lbl">Price / gal</div>
+            <div class="val"><span class="unit">$</span>3.29</div>
+          </div>
+        </div>
+
+        <!-- Total: auto-computed -->
+        <div class="field computed">
+          <div class="tag">auto-calculated</div>
+          <div class="lbl">Total cost</div>
+          <div class="val"><span class="unit">$</span>40.80</div>
+        </div>
+
+        <!-- Fill type -->
+        <div class="seg">
+          <button class="on">Full tank</button>
+          <button>Partial</button>
+        </div>
+
+        <!-- optional -->
+        <div class="more">
+          <span>Add details — station, notes, tags…</span>
+          <span class="plus">+</span>
+        </div>
+      </div>
+
+      <button class="save">Save fuel-up</button>
+
+      <div class="nav">
+        <div class="item"><span class="ic">▤</span>Garage</div>
+        <div class="item on"><span class="ic">⛽</span>Log</div>
+        <div class="item"><span class="ic">📈</span>Stats</div>
+        <div class="item"><span class="ic">⚙</span>Settings</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption">
+    <b>The flow:</b> from your garage you tap the big <span class="blue">+</span>,
+    this screen opens with the <b>odometer already selected</b> so you start typing
+    immediately. Enter <b>any two</b> of gallons / price / total and the third
+    <span class="blue">fills in by itself</span>. Tap <b>Save</b>. Everything else
+    (station, notes) is optional and tucked behind “Add details.”
+  </div>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pitstop — Fuel Grade Comparison (mockup)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0A0A0B;
+    --surface: #1C1C1E;
+    --surface2: #232326;
+    --text: #F5F5F7;
+    --muted: #8E8E93;
+    --accent: #3B9EFF;
+    --line: #2C2C2E;
+  }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #000; color: var(--text);
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; padding: 32px 16px 48px; gap: 22px;
+  }
+  h2 { font-size: 18px; font-weight: 600; }
+  .caption {
+    max-width: 420px; text-align: center; color: var(--muted);
+    font-size: 14px; line-height: 1.6;
+  }
+  .caption b { color: var(--text); font-weight: 600; }
+  .caption .blue { color: var(--accent); font-weight: 600; }
+
+  .phone {
+    width: 390px; max-width: 100%; background: var(--bg);
+    border-radius: 44px; border: 10px solid #1a1a1d;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6); overflow: hidden;
+  }
+  .screen { padding: 20px 16px 12px; }
+
+  .crumb { color: var(--muted); font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+  .h1 { font-size: 22px; font-weight: 700; letter-spacing: -.01em; margin-bottom: 16px; }
+  .h1 .veh { color: var(--muted); font-weight: 500; font-size: 15px; }
+
+  .card { background: var(--surface); border-radius: 20px; padding: 18px; }
+  .card .q { font-size: 15px; font-weight: 600; margin-bottom: 16px; }
+
+  /* two grade columns */
+  .grades { display: flex; gap: 12px; }
+  .grade {
+    flex: 1; background: var(--surface2); border-radius: 16px; padding: 14px;
+    border: 1.5px solid transparent; position: relative;
+  }
+  .grade.win { border-color: var(--accent); }
+  .grade .octane { font-size: 30px; font-weight: 800; letter-spacing: -.02em; }
+  .grade .sub { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .grade .cpm { font-size: 26px; font-weight: 700; margin-top: 12px; letter-spacing: -.01em; }
+  .grade .cpmlbl { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .03em; margin-top: 1px; }
+  .pill {
+    position: absolute; top: 12px; right: 12px;
+    background: var(--accent); color: #001427;
+    font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 999px;
+    display: flex; align-items: center; gap: 3px;
+  }
+
+  /* comparison bars */
+  .bars { margin-top: 18px; }
+  .barrow { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
+  .barrow .k { width: 34px; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .track { flex: 1; background: #2a2a2d; border-radius: 999px; height: 12px; overflow: hidden; }
+  .fill { height: 100%; border-radius: 999px; }
+  .fill.a { width: 60%; background: var(--accent); }
+  .fill.b { width: 87%; background: #6b6b70; }
+  .barrow .v { width: 56px; text-align: right; font-size: 13px; font-weight: 600; }
+  .axislbl { color: var(--muted); font-size: 11px; text-align: right; margin-top: 2px; }
+
+  /* verdict */
+  .verdict {
+    margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line);
+    text-align: center;
+  }
+  .verdict .save { font-size: 15px; color: var(--muted); font-weight: 500; }
+  .verdict .amt { font-size: 34px; font-weight: 800; color: var(--accent); letter-spacing: -.02em; margin: 2px 0; }
+  .verdict .why { font-size: 12px; color: var(--muted); line-height: 1.5; max-width: 280px; margin: 4px auto 0; }
+
+  .note { margin-top: 14px; font-size: 11px; color: var(--muted); text-align: center; }
+</style>
+</head>
+<body>
+  <h2>Pitstop — “is premium worth it?” card</h2>
+  <div class="phone">
+    <div class="screen">
+      <div class="crumb">Stats › Fuel grade</div>
+      <div class="h1">Which grade is cheaper to run? <span class="veh">· 2019 Sierra</span></div>
+
+      <div class="card">
+        <div class="q">Cost per mile tells the real story — it blends pump price and MPG.</div>
+
+        <div class="grades">
+          <div class="grade win">
+            <span class="pill">✓ Best value</span>
+            <div class="octane">87</div>
+            <div class="sub">$3.29 / gal · 28.1 MPG</div>
+            <div class="cpm">11.7¢</div>
+            <div class="cpmlbl">per mile</div>
+          </div>
+          <div class="grade">
+            <div class="octane">91</div>
+            <div class="sub">$3.69 / gal · 29.0 MPG</div>
+            <div class="cpm">12.7¢</div>
+            <div class="cpmlbl">per mile</div>
+          </div>
+        </div>
+
+        <div class="bars">
+          <div class="barrow">
+            <span class="k">87</span>
+            <span class="track"><span class="fill a"></span></span>
+            <span class="v">11.7¢</span>
+          </div>
+          <div class="barrow">
+            <span class="k">91</span>
+            <span class="track"><span class="fill b"></span></span>
+            <span class="v">12.7¢</span>
+          </div>
+          <div class="axislbl">cost per mile — lower is better</div>
+        </div>
+
+        <div class="verdict">
+          <div class="save">Sticking with 87 saves you about</div>
+          <div class="amt">$121 / year</div>
+          <div class="why">The 91 gives you a hair better MPG, but not enough to
+            cover its higher price. Estimated at 12,000 mi/year.</div>
+        </div>
+
+        <div class="note">Based on your last 6 full tanks of 87 and 4 of 91.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption">
+    The headline number is <span class="blue">cost per mile</span>, because that's
+    the one figure that folds in both the higher pump price <b>and</b> any MPG gain.
+    Here 91 gets slightly better mileage — but not enough to beat 87 on cost, so
+    Pitstop calls it: <b>87 wins by ~$121/year</b> for this truck.
+  </div>
+</body>
+</html>

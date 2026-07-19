@@ -1,0 +1,31 @@
+services:
+  pitstop:
+    build: .
+    container_name: pitstop
+    ports:
+      - "8080:8080"
+    environment:
+      # See .env.example for all options. With no SECRET_KEY set, one is
+      # generated on first start and stored in the data volume.
+      ALLOW_REGISTRATION: ${ALLOW_REGISTRATION:-false}
+      # DATABASE_URL: postgresql+psycopg://pitstop:pitstop@db:5432/pitstop
+    volumes:
+      - pitstop_data:/data
+    restart: unless-stopped
+
+  # ---- Optional: Postgres instead of the default SQLite ----
+  # Uncomment this service and the DATABASE_URL above, then `docker compose up -d`.
+  # db:
+  #   image: postgres:17-alpine
+  #   container_name: pitstop-db
+  #   environment:
+  #     POSTGRES_USER: pitstop
+  #     POSTGRES_PASSWORD: pitstop
+  #     POSTGRES_DB: pitstop
+  #   volumes:
+  #     - pitstop_pgdata:/var/lib/postgresql/data
+  #   restart: unless-stopped
+
+volumes:
+  pitstop_data:
+  # pitstop_pgdata:
