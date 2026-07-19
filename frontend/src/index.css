@@ -37,6 +37,17 @@ body {
   textarea {
     font-size: 16px;
   }
+
+  /* iOS sizes date/time inputs to their formatted text ("Jul 19, 2026 at
+     1:58 PM") and won't shrink below it, so width:100% loses to the implied
+     min-width:auto and the field overflows its card or grid column. */
+  input[type="date"],
+  input[type="datetime-local"],
+  input[type="time"],
+  input[type="month"] {
+    min-width: 0;
+    max-width: 100%;
+  }
 }
 
 /* large stat readouts use tabular figures per the design language */

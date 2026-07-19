@@ -25,7 +25,9 @@ export function Button({ variant = "primary", className = "", ...props }: Button
 
 export function Field({ label, children, hint }: { label: string; children: ReactNode; hint?: string }) {
   return (
-    <label className="block">
+    // min-w-0: grid/flex items default to min-width:auto, which lets a wide
+    // date input push the field past its column instead of shrinking
+    <label className="block min-w-0">
       <span className="mb-1.5 block text-[13px] font-medium text-muted">{label}</span>
       {children}
       {hint && <span className="mt-1 block text-xs text-muted/80">{hint}</span>}
