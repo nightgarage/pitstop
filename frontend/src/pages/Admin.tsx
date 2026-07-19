@@ -23,7 +23,7 @@ export default function AdminPage({ user }: { user: User }) {
     settings.allow_registration === null ? "env" : settings.allow_registration ? "on" : "off";
 
   return (
-    <div className="mx-auto max-w-lg px-4 pb-16 pt-6">
+    <div className="pt-safe pb-safe mx-auto max-w-lg px-4">
       <header className="mb-6 flex items-center gap-3">
         <Link
           to="/settings"

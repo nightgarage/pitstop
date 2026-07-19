@@ -138,7 +138,7 @@ export default function ServiceRecordFormPage() {
         : "";
 
   return (
-    <div className="mx-auto max-w-lg px-4 pb-16 pt-6">
+    <div className="pt-safe pb-safe mx-auto max-w-lg px-4">
       {viewer && <Lightbox src={viewer.src} alt={viewer.alt} onClose={() => setViewer(null)} />}
       <header className="mb-6 flex items-center gap-3">
         <button

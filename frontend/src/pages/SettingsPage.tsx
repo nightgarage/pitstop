@@ -125,7 +125,7 @@ export default function SettingsPage({ user }: { user: User }) {
   const [passwords, setPasswords] = useState({ current_password: "", new_password: "" });
 
   return (
-    <div className="mx-auto max-w-lg px-4 pb-16 pt-6">
+    <div className="pt-safe pb-safe mx-auto max-w-lg px-4">
       <header className="mb-6 flex items-center gap-3">
         <Link
           to="/"

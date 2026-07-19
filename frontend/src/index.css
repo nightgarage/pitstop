@@ -29,3 +29,20 @@ body {
 .tabular {
   font-variant-numeric: tabular-nums;
 }
+
+/* The viewport is viewport-fit=cover so the dark background reaches the screen
+   edges; these keep actual content out from under the status bar, the home
+   indicator, and the bottom nav. */
+.pt-safe {
+  padding-top: max(env(safe-area-inset-top), 1.5rem);
+}
+
+/* standalone pages (forms, settings) — clears the home indicator */
+.pb-safe {
+  padding-bottom: calc(4rem + env(safe-area-inset-bottom));
+}
+
+/* pages inside the tab bar — clears the nav plus the home indicator */
+.pb-safe-nav {
+  padding-bottom: calc(7rem + env(safe-area-inset-bottom));
+}

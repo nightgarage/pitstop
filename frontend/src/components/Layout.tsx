@@ -32,7 +32,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           {queued} {queued === 1 ? "entry" : "entries"} saved offline — will sync automatically
         </button>
       )}
-      <main className="flex-1 px-4 pt-6 pb-28">{children}</main>
+      <main className="pt-safe pb-safe-nav flex-1 px-4">{children}</main>
 
       <nav
         className="fixed inset-x-0 bottom-0 z-10 border-t border-line bg-bg/90 backdrop-blur
