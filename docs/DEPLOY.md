@@ -11,16 +11,37 @@ cd pitstop
 docker compose up -d
 ```
 
-Open `http://<host>:8080` and complete the first-run admin setup. All
-configuration is environment variables — see [`.env.example`](../.env.example).
-Data (SQLite DB, generated secret, attachments) lives in the `pitstop_data`
-volume; backing up means copying that volume (or using Settings → Export).
+Open `http://<host>:8080` and complete the first-run admin setup. Data (SQLite
+DB, generated secret, attachments) lives in the `pitstop_data` volume.
+
+### Configure it without breaking updates
+
+Put settings in a `.env` file next to `docker-compose.yml`. Compose reads it
+automatically and it's gitignored, so `git pull` can never conflict with it.
+**Avoid editing the tracked `docker-compose.yml`** — that's what turns a
+routine update into a merge conflict.
+
+```bash
+cp .env.example .env
+```
+
+```ini
+# .env — typical setup behind a reverse proxy
+PITSTOP_PORT=8090        # 8080 already taken on this host
+COOKIE_SECURE=true       # served over HTTPS
+ALLOW_REGISTRATION=false
+```
+
+Then `docker compose up -d`. See [`.env.example`](../.env.example) for every
+option. For deeper changes (extra networks, labels), add a
+`docker-compose.override.yml` — Compose merges it automatically and it's
+gitignored too.
 
 ### Postgres instead of SQLite
 
-Uncomment the `db` service and the `DATABASE_URL` line in
-`docker-compose.yml`, then `docker compose up -d`. Migrations run automatically
-on start.
+Uncomment the `db` service in `docker-compose.yml` and set `DATABASE_URL` in
+your `.env`, then `docker compose up -d`. Migrations run automatically on
+start.
 
 ## Behind a Cloudflare tunnel
 
@@ -123,5 +144,15 @@ automatic pre-migration backup covers SQLite only.
   or the compose healthcheck.
 - Back up `DATA_DIR` (SQLite file + `attachments/` + `.secret_key`), or use
   Settings → Export for a portable JSON/CSV copy.
+- **The automatic pre-migration backups live inside the same volume.** They
+  protect you from a bad upgrade, not from losing the volume itself. Copy
+  something off the box periodically — either the volume:
+
+  ```bash
+  docker run --rm -v pitstop_pitstop_data:/data -v "$PWD":/out alpine \
+    tar czf /out/pitstop-backup.tgz /data
+  ```
+
+  or just hit Settings → Export and keep the JSON somewhere safe.
 - A demo instance: set `SEED_DEMO=true` on an empty database to get a
   `demo@example.com` / `pitstop-demo` account with sample data.

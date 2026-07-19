@@ -3,18 +3,26 @@ services:
     build: .
     container_name: pitstop
     ports:
-      - "8080:8080"
+      # Host port is configurable so you never have to edit this file: put
+      # PITSTOP_PORT=8090 in a .env file next to it (8080 is a busy port).
+      - "${PITSTOP_PORT:-8080}:8080"
     environment:
-      # See .env.example for all options. With no SECRET_KEY set, one is
-      # generated on first start and stored in the data volume.
+      # Every value below can be set in a .env file beside this one, which is
+      # gitignored — so `git pull` never conflicts with your local settings.
+      # See .env.example for the full list and what each does.
       ALLOW_REGISTRATION: ${ALLOW_REGISTRATION:-false}
-      # DATABASE_URL: postgresql+psycopg://pitstop:pitstop@db:5432/pitstop
+      COOKIE_SECURE: ${COOKIE_SECURE:-false} # true once served over HTTPS
+      BASE_PATH: ${BASE_PATH:-} # e.g. /pitstop when behind a subpath
+      SECRET_KEY: ${SECRET_KEY:-} # blank = generated once, kept in the volume
+      DATABASE_URL: ${DATABASE_URL:-} # blank = SQLite in the volume
+      SEED_DEMO: ${SEED_DEMO:-false} # demo account with sample data
     volumes:
       - pitstop_data:/data
     restart: unless-stopped
 
   # ---- Optional: Postgres instead of the default SQLite ----
-  # Uncomment this service and the DATABASE_URL above, then `docker compose up -d`.
+  # Uncomment this service, then set in your .env:
+  #   DATABASE_URL=postgresql+psycopg://pitstop:pitstop@db:5432/pitstop
   # db:
   #   image: postgres:17-alpine
   #   container_name: pitstop-db

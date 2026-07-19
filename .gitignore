@@ -29,6 +29,10 @@ pnpm-debug.log*
 .env.*
 !.env.example
 
+# Local Compose customisation (extra networks, labels, etc.). Compose merges
+# this automatically, so you never need to edit the tracked compose file.
+docker-compose.override.yml
+
 # ---- Data / runtime (never commit user data) ----
 *.db
 *.sqlite
