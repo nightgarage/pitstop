@@ -38,15 +38,22 @@ body {
     font-size: 16px;
   }
 
-  /* iOS sizes date/time inputs to their formatted text ("Jul 19, 2026 at
-     1:58 PM") and won't shrink below it, so width:100% loses to the implied
-     min-width:auto and the field overflows its card or grid column. */
+  /* Date/time fields on iOS render with native control chrome that uses its
+     own internal metrics — it ignores both our width and our font-size, so
+     the field overflows its card and still triggers the focus zoom even
+     though we set 16px. Dropping the native appearance makes it obey CSS
+     like any other field; tapping still opens the usual iOS picker. */
   input[type="date"],
   input[type="datetime-local"],
   input[type="time"],
   input[type="month"] {
+    -webkit-appearance: none;
+    appearance: none;
+    font-size: 16px;
     min-width: 0;
+    width: 100%;
     max-width: 100%;
+    text-align: left;
   }
 }
 
