@@ -25,6 +25,20 @@ body {
   @apply bg-bg text-text font-sans antialiased;
 }
 
+/* Safety net for iOS: Safari zooms the whole page when you focus a field whose
+   text is under 16px, and never zooms back out. This is the default for any
+   control that doesn't set its own size.
+   It must live in @layer base — Tailwind's utilities are in a later layer, so
+   they still win. Unlayered, this would beat every text-[..] class and shrink
+   the big pump-screen numbers to 16px. */
+@layer base {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
 /* large stat readouts use tabular figures per the design language */
 .tabular {
   font-variant-numeric: tabular-nums;
