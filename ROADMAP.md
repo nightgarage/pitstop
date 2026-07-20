@@ -13,7 +13,7 @@ idea or want to claim an item? Open an issue.
 
 - **First-login walkthrough** — new accounts get a short setup flow instead
   of an empty garage: install to the home screen (skipped when already
-  installed; iOS gets the Share → "Add to Home Screen" steps), four tour
+  installed; iOS gets numbered "Add to Home Screen" steps), four tour
   cards, then adding the first vehicle with a pointer to the CSV importer.
   Skippable throughout, re-runnable from Settings → "Replay the welcome
   tour". Deliberately no "log a baseline odometer" step — it would be

@@ -3,8 +3,6 @@ import {
   CheckCircle2,
   Fuel,
   MonitorSmartphone,
-  Share,
-  SquarePlus,
   Warehouse,
   Wrench,
 } from "lucide-react";
@@ -68,24 +66,26 @@ function InstallStep() {
       {ios ? (
         <ol className="mt-6 w-full max-w-sm space-y-3 text-left">
           {[
-            {
-              icon: <Share size={17} strokeWidth={1.9} className="text-accent" />,
-              text: "Tap the Share button in Safari",
-            },
-            {
-              icon: <SquarePlus size={17} strokeWidth={1.9} className="text-accent" />,
-              text: 'Scroll down and choose "Add to Home Screen"',
-            },
-            {
-              icon: <CheckCircle2 size={17} strokeWidth={1.9} className="text-accent" />,
-              text: "Open Pitstop from your home screen",
-            },
-          ].map((step, index) => (
+            <>
+              Tap the <span className="font-semibold text-text">⋯</span> button next to the
+              address bar
+            </>,
+            <>
+              Tap <span className="font-semibold text-text">Share</span>
+            </>,
+            <>
+              Tap <span className="font-semibold text-text">View More</span>
+            </>,
+            <>
+              Choose <span className="font-semibold text-text">Add to Home Screen</span>, then{" "}
+              <span className="font-semibold text-text">Add</span>
+            </>,
+          ].map((text, index) => (
             <li key={index} className="flex items-center gap-3 rounded-card bg-surface px-4 py-3.5">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface2">
-                {step.icon}
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface2 text-[13px] font-bold text-accent">
+                {index + 1}
               </span>
-              <span className="text-[14px]">{step.text}</span>
+              <span className="text-[14px] text-muted">{text}</span>
             </li>
           ))}
         </ol>
@@ -107,8 +107,9 @@ function InstallStep() {
       )}
 
       <p className="mt-5 max-w-sm text-[12px] leading-relaxed text-muted/80">
-        If the installed app asks you to sign in again, use the same login — then this
-        walkthrough picks up right where it left off.
+        {ios
+          ? "Then open Pitstop from your home screen. If it asks you to sign in again, use the same login — this walkthrough picks up right where it left off."
+          : "If the installed app asks you to sign in again, use the same login — then this walkthrough picks up right where it left off."}
       </p>
     </div>
   );
