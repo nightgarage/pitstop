@@ -1,4 +1,4 @@
-import { ArrowLeft, Bell, Download, FileUp, LogOut, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Bell, Download, FileUp, LogOut, ShieldCheck, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -293,6 +293,14 @@ export default function SettingsPage({ user }: { user: User }) {
             Admin — users & instance settings
           </Link>
         )}
+
+        <Link
+          to="/welcome"
+          className="flex items-center gap-2.5 rounded-card bg-surface p-4 text-[14px] font-semibold transition-colors hover:bg-surface2"
+        >
+          <Sparkles size={17} strokeWidth={1.8} className="text-accent" />
+          Replay the welcome tour
+        </Link>
 
         <Card className="flex items-center justify-between">
           <div>

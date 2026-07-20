@@ -12,6 +12,7 @@ export interface User {
   volume_unit: VolumeUnit;
   currency: string;
   show_driving_conditions: boolean;
+  onboarding_done: boolean;
   created_at: string;
 }
 

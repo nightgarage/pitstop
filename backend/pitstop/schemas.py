@@ -37,6 +37,7 @@ class UserOut(BaseModel):
     volume_unit: VolumeUnit
     currency: str
     show_driving_conditions: bool = False
+    onboarding_done: bool = False
     created_at: datetime
 
 
@@ -46,6 +47,7 @@ class UserUpdate(BaseModel):
     volume_unit: VolumeUnit | None = None
     currency: str | None = Field(default=None, min_length=3, max_length=3)
     show_driving_conditions: bool | None = None
+    onboarding_done: bool | None = None
 
 
 class AuthStatus(BaseModel):

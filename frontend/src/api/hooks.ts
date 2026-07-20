@@ -74,8 +74,19 @@ export function useLogout() {
 export function useUpdateProfile() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (body: Partial<Pick<User, "display_name" | "distance_unit" | "volume_unit" | "currency">>) =>
-      api.patch<User>("/api/auth/me", body),
+    mutationFn: (
+      body: Partial<
+        Pick<
+          User,
+          | "display_name"
+          | "distance_unit"
+          | "volume_unit"
+          | "currency"
+          | "show_driving_conditions"
+          | "onboarding_done"
+        >
+      >
+    ) => api.patch<User>("/api/auth/me", body),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["auth"] }),
   });
 }

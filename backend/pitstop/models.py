@@ -45,6 +45,8 @@ class User(SQLModel, table=True):
     currency: str = Field(default="USD", max_length=3)
     # optional logging fields (driving conditions etc.) are hidden by default
     show_driving_conditions: bool = Field(default=False)
+    # first-login walkthrough finished (or deliberately skipped)
+    onboarding_done: bool = Field(default=False)
     created_at: datetime = Field(default_factory=utcnow)
 
 

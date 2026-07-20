@@ -37,6 +37,7 @@ def seed_demo_data(session: Session) -> bool:
         password_hash=hash_password(DEMO_PASSWORD),
         display_name="Demo Driver",
         role=Role.admin,
+        onboarding_done=True,  # the demo garage is already populated
     )
     session.add(user)
     session.flush()

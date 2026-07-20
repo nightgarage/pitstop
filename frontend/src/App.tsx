@@ -1,8 +1,10 @@
+import { useEffect, useRef } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import { useAuthStatus } from "./api/hooks";
+import { useAuthStatus, useUpdateProfile, useVehicles } from "./api/hooks";
 import Layout from "./components/Layout";
 import { Spinner } from "./components/ui";
+import type { User } from "./api/types";
 import AdminPage from "./pages/Admin";
 import { LoginPage, SetupPage } from "./pages/AuthPages";
 import DashboardPage from "./pages/Dashboard";
@@ -11,6 +13,7 @@ import GaragePage from "./pages/Garage";
 import ImportPage from "./pages/Import";
 import LogPage from "./pages/Log";
 import NotificationsPage from "./pages/Notifications";
+import OnboardingPage from "./pages/Onboarding";
 import ReminderFormPage from "./pages/ReminderForm";
 import ServicePage from "./pages/Service";
 import ServiceRecordFormPage from "./pages/ServiceRecordForm";
@@ -33,9 +36,38 @@ export default function App() {
   if (status.setup_required) return <SetupPage />;
   if (!status.user) return <LoginPage allowRegistration={status.allow_registration} />;
 
-  const user = status.user;
+  return <AuthedApp user={status.user} />;
+}
+
+function AuthedApp({ user }: { user: User }) {
+  // First-login walkthrough gate: brand-new accounts (no vehicles, flag unset)
+  // go to /welcome. Accounts that predate the flag but already have vehicles
+  // are marked done silently so they never see it.
+  const needsCheck = !user.onboarding_done;
+  const { data: vehicles } = useVehicles();
+  const update = useUpdateProfile();
+  const autoMarked = useRef(false);
+
+  useEffect(() => {
+    if (needsCheck && vehicles && vehicles.length > 0 && !autoMarked.current) {
+      autoMarked.current = true;
+      update.mutate({ onboarding_done: true });
+    }
+  }, [needsCheck, vehicles, update]);
+
+  if (needsCheck && !vehicles) return <Spinner />;
+  if (needsCheck && vehicles?.length === 0) {
+    return (
+      <Routes>
+        <Route path="/welcome" element={<OnboardingPage user={user} />} />
+        <Route path="*" element={<Navigate to="/welcome" replace />} />
+      </Routes>
+    );
+  }
+
   return (
     <Routes>
+      <Route path="/welcome" element={<OnboardingPage user={user} />} />
       <Route path="/vehicles/new" element={<VehicleFormPage />} />
       <Route path="/vehicles/:id/edit" element={<VehicleFormPage />} />
       <Route

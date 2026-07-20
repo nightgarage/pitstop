@@ -65,7 +65,14 @@ function toPayload(form: FormState): VehiclePayload {
   };
 }
 
-export default function VehicleFormPage() {
+export default function VehicleFormPage({
+  embedded = false,
+  onSaved,
+}: {
+  /** render inside another page (the welcome walkthrough): no header, no page padding */
+  embedded?: boolean;
+  onSaved?: () => void;
+} = {}) {
   const { id } = useParams();
   const vehicleId = id ? Number(id) : undefined;
   const isEdit = vehicleId !== undefined;
@@ -106,29 +113,33 @@ export default function VehicleFormPage() {
 
   const submit = (event: React.FormEvent) => {
     event.preventDefault();
-    mutation.mutate(toPayload(form), { onSuccess: () => navigate("/") });
+    mutation.mutate(toPayload(form), {
+      onSuccess: () => (onSaved ? onSaved() : navigate("/")),
+    });
   };
 
   return (
-    <div className="pt-safe pb-safe mx-auto max-w-lg px-4">
-      <header className="mb-6 flex items-center gap-3">
-        <Link
-          to="/"
-          aria-label="Back to garage"
-          className="flex h-10 w-10 items-center justify-center rounded-full bg-surface text-muted hover:text-text"
-        >
-          <ArrowLeft size={19} strokeWidth={1.8} />
-        </Link>
-        <h1 className="text-[22px] font-extrabold tracking-tight">
-          {isEdit ? "Edit vehicle" : "Add vehicle"}
-        </h1>
-      </header>
+    <div className={embedded ? "" : "pt-safe pb-safe mx-auto max-w-lg px-4"}>
+      {!embedded && (
+        <header className="mb-6 flex items-center gap-3">
+          <Link
+            to="/"
+            aria-label="Back to garage"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-surface text-muted hover:text-text"
+          >
+            <ArrowLeft size={19} strokeWidth={1.8} />
+          </Link>
+          <h1 className="text-[22px] font-extrabold tracking-tight">
+            {isEdit ? "Edit vehicle" : "Add vehicle"}
+          </h1>
+        </header>
+      )}
 
       <form className="space-y-5" onSubmit={submit}>
         <Field label="Nickname">
           <Input
             required
-            autoFocus={!isEdit}
+            autoFocus={!isEdit && !embedded}
             value={form.name}
             onChange={(e) => set({ name: e.target.value })}
             placeholder="Daily Driver"
