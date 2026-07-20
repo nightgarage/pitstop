@@ -111,6 +111,22 @@ the admin account. Data (SQLite database + generated secret) lives in the
 `DATABASE_URL`, subpath, and so on). The interactive API docs are served at
 `/api/docs`.
 
+### Adding users
+
+The account created on first run is the admin. To get anyone else in, either:
+
+- **Add them yourself** — in the app, go to Settings → **Admin** → **Add a
+  user**: enter their email and a display name, and Pitstop creates the account
+  on the spot and shows you a one-time temporary password to pass along.
+  Registration stays closed the whole time. They get the welcome tour on first
+  sign-in and can change the password in Settings.
+- **Let them sign up** — switch **Open registration** to *On* in the same admin
+  page (or set `ALLOW_REGISTRATION=true`), have them create an account from the
+  login screen, then close it again if you don't want strangers signing up.
+
+Either way, every account gets its own private garage — users never see each
+other's vehicles.
+
 ### Development setup
 
 Backend (Python 3.12+) and frontend run separately during development:

@@ -33,7 +33,9 @@ ALLOW_REGISTRATION=false
 ```
 
 Then `docker compose up -d`. See [`.env.example`](../.env.example) for every
-option. For deeper changes (extra networks, labels), add a
+option. `ALLOW_REGISTRATION` can stay `false` even on a multi-user instance:
+the admin can create accounts from Settings → Admin → "Add a user", which
+issues a one-time temporary password to pass along. For deeper changes (extra networks, labels), add a
 `docker-compose.override.yml` — Compose merges it automatically and it's
 gitignored too.
 
