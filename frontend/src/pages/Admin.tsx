@@ -1,15 +1,91 @@
-import { ArrowLeft, ShieldCheck, Trash2 } from "lucide-react";
+import { ArrowLeft, ShieldCheck, Trash2, UserPlus } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { ApiError } from "../api/client";
 import {
   useAdminSettings,
   useAdminUsers,
+  useCreateAdminUser,
   useDeleteAdminUser,
   useUpdateAdminSettings,
 } from "../api/hooks";
 import type { User } from "../api/types";
-import { Card, Segmented, Spinner } from "../components/ui";
+import { Button, Card, ErrorText, Field, Input, Segmented, Spinner } from "../components/ui";
 import { shortDate } from "../lib/format";
+
+function AddUserCard() {
+  const createUser = useCreateAdminUser();
+  const [form, setForm] = useState({ email: "", display_name: "" });
+  const [copied, setCopied] = useState(false);
+  const created = createUser.data;
+
+  return (
+    <Card>
+      <h2 className="mb-1 flex items-center gap-2 text-[15px] font-semibold">
+        <UserPlus size={15} className="text-accent" /> Add a user
+      </h2>
+      <p className="mb-4 text-[13px] leading-relaxed text-muted">
+        Creates the account right away — no need to open registration. You'll get a
+        temporary password to pass along.
+      </p>
+      <form
+        className="space-y-4"
+        onSubmit={(event) => {
+          event.preventDefault();
+          setCopied(false);
+          createUser.mutate(form, {
+            onSuccess: () => setForm({ email: "", display_name: "" }),
+          });
+        }}
+      >
+        <Field label="Email">
+          <Input
+            required
+            type="email"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+          />
+        </Field>
+        <Field label="Display name">
+          <Input
+            required
+            maxLength={80}
+            value={form.display_name}
+            onChange={(e) => setForm({ ...form, display_name: e.target.value })}
+          />
+        </Field>
+        <ErrorText>{createUser.error instanceof ApiError ? createUser.error.message : ""}</ErrorText>
+        <Button type="submit" variant="surface" disabled={createUser.isPending}>
+          Create account
+        </Button>
+      </form>
+      {created && (
+        <div className="mt-4 rounded-control bg-surface2 p-3.5">
+          <p className="text-[13px] font-semibold">{created.user.email}</p>
+          <p className="mt-1 font-mono text-[16px] font-bold tracking-wide text-accent">
+            {created.temp_password}
+          </p>
+          <p className="mt-1.5 text-[12px] leading-relaxed text-muted">
+            Send them their email and this password — it won't be shown again after you
+            leave this page. They'll get the welcome tour on first sign-in; suggest they
+            change the password in Settings.
+          </p>
+          <Button
+            variant="surface"
+            className="mt-3"
+            onClick={async () => {
+              await navigator.clipboard.writeText(created.temp_password);
+              setCopied(true);
+            }}
+          >
+            {copied ? "Copied ✓" : "Copy password"}
+          </Button>
+        </div>
+      )}
+    </Card>
+  );
+}
 
 export default function AdminPage({ user }: { user: User }) {
   const { data: users } = useAdminUsers();
@@ -64,6 +140,8 @@ export default function AdminPage({ user }: { user: User }) {
             .
           </p>
         </Card>
+
+        <AddUserCard />
 
         <Card>
           <h2 className="mb-3 text-[15px] font-semibold">Users</h2>

@@ -1,5 +1,7 @@
+import secrets
+
 from fastapi import APIRouter, HTTPException, status
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr, Field
 from sqlmodel import Session, func, select
 
 from ..config import get_settings
@@ -14,6 +16,7 @@ from ..models import (
     Notification,
     NotificationChannel,
     OdometerAdjustment,
+    Role,
     ServiceItem,
     ServiceRecord,
     ServiceReminder,
@@ -21,6 +24,7 @@ from ..models import (
     User,
     Vehicle,
 )
+from ..security import hash_password
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 
@@ -79,6 +83,48 @@ def list_users(session: SessionDep, admin: AdminUser) -> list[AdminUserOut]:
             )
         )
     return out
+
+
+class AdminUserCreate(BaseModel):
+    email: EmailStr
+    display_name: str = Field(min_length=1, max_length=80)
+
+
+class AdminUserCreated(BaseModel):
+    user: AdminUserOut
+    temp_password: str
+
+
+@router.post("/users", response_model=AdminUserCreated, status_code=status.HTTP_201_CREATED)
+def create_user(body: AdminUserCreate, session: SessionDep, admin: AdminUser) -> AdminUserCreated:
+    """Create an account directly, bypassing the registration toggle. The
+    generated temporary password is returned exactly once for the admin to
+    pass along; the new user should change it after signing in."""
+    email = body.email.strip().lower()
+    if session.exec(select(User).where(User.email == email)).first() is not None:
+        raise HTTPException(status_code=409, detail="An account with this email already exists")
+    temp_password = secrets.token_urlsafe(9)
+    user = User(
+        email=email,
+        password_hash=hash_password(temp_password),
+        display_name=body.display_name,
+        role=Role.user,
+    )
+    session.add(user)
+    session.commit()
+    session.refresh(user)
+    return AdminUserCreated(
+        user=AdminUserOut(
+            id=user.id,
+            email=user.email,
+            display_name=user.display_name,
+            role=user.role.value,
+            created_at=user.created_at.isoformat(),
+            vehicle_count=0,
+            entry_count=0,
+        ),
+        temp_password=temp_password,
+    )
 
 
 @router.delete("/users/{user_id}", status_code=status.HTTP_204_NO_CONTENT)

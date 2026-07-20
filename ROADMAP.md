@@ -11,6 +11,9 @@ idea or want to claim an item? Open an issue.
 
 ## Shipped recently
 
+- **Admin can add users directly** — Settings → Admin has an "Add a user" form
+  that creates the account with a one-time temporary password, no need to open
+  registration.
 - **First-login walkthrough** — new accounts get a short setup flow instead
   of an empty garage: install to the home screen (skipped when already
   installed; iOS gets numbered "Add to Home Screen" steps), four tour

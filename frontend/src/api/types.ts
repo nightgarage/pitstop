@@ -26,6 +26,11 @@ export interface AdminUser {
   entry_count: number;
 }
 
+export interface AdminCreatedUser {
+  user: AdminUser;
+  temp_password: string;
+}
+
 export interface AdminSettings {
   allow_registration: boolean | null;
   effective_allow_registration: boolean;

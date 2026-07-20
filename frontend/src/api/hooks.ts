@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { api } from "./client";
 import type {
+  AdminCreatedUser,
   AdminSettings,
   AdminUser,
   AuthStatus,
@@ -33,7 +34,15 @@ export function useAuthStatus() {
 
 function useAuthInvalidation() {
   const queryClient = useQueryClient();
-  return () => queryClient.invalidateQueries();
+  // Invalidating alone isn't enough: invalidated queries keep serving their
+  // old data while refetching, so after switching accounts the app would
+  // briefly act on the previous user's data — the walkthrough gate reads the
+  // vehicle list and would wrongly mark a brand-new account as onboarded.
+  // Unmounted queries get dropped outright; mounted ones refetch.
+  return () => {
+    queryClient.removeQueries({ type: "inactive" });
+    queryClient.invalidateQueries();
+  };
 }
 
 export function useSetup() {
@@ -384,6 +393,15 @@ export function useAdminUsers() {
   return useQuery({
     queryKey: ["admin", "users"],
     queryFn: () => api.get<AdminUser[]>("/api/admin/users"),
+  });
+}
+
+export function useCreateAdminUser() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (body: { email: string; display_name: string }) =>
+      api.post<AdminCreatedUser>("/api/admin/users", body),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["admin"] }),
   });
 }
 
