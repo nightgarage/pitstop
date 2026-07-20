@@ -6,13 +6,13 @@ import {
   Warehouse,
   Wrench,
 } from "lucide-react";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useUpdateProfile } from "../api/hooks";
 import type { User } from "../api/types";
 import { Button } from "../components/ui";
-import { canPromptInstall, isIOS, isStandalone, promptInstall } from "../lib/install";
+import { canPromptInstall, isAndroid, isIOS, isStandalone, promptInstall } from "../lib/install";
 import VehicleFormPage from "./VehicleForm";
 
 /** Illustrative tour cards — deliberately not spotlights on the live UI,
@@ -46,6 +46,21 @@ type Step =
   | { kind: "vehicle" }
   | { kind: "done" };
 
+function StepList({ steps }: { steps: ReactNode[] }) {
+  return (
+    <ol className="mt-6 w-full max-w-sm space-y-3 text-left">
+      {steps.map((text, index) => (
+        <li key={index} className="flex items-center gap-3 rounded-card bg-surface px-4 py-3.5">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface2 text-[13px] font-bold text-accent">
+            {index + 1}
+          </span>
+          <span className="text-[14px] text-muted">{text}</span>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 function InstallStep() {
   const [installed, setInstalled] = useState(false);
   const ios = isIOS();
@@ -64,8 +79,8 @@ function InstallStep() {
       </p>
 
       {ios ? (
-        <ol className="mt-6 w-full max-w-sm space-y-3 text-left">
-          {[
+        <StepList
+          steps={[
             <>
               Tap the <span className="font-semibold text-text">⋯</span> button next to the
               address bar
@@ -80,15 +95,8 @@ function InstallStep() {
               Choose <span className="font-semibold text-text">Add to Home Screen</span>, then{" "}
               <span className="font-semibold text-text">Add</span>
             </>,
-          ].map((text, index) => (
-            <li key={index} className="flex items-center gap-3 rounded-card bg-surface px-4 py-3.5">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface2 text-[13px] font-bold text-accent">
-                {index + 1}
-              </span>
-              <span className="text-[14px] text-muted">{text}</span>
-            </li>
-          ))}
-        </ol>
+          ]}
+        />
       ) : canPromptInstall() && !installed ? (
         <Button
           className="mt-6"
@@ -98,11 +106,31 @@ function InstallStep() {
         >
           Install Pitstop
         </Button>
+      ) : installed ? (
+        <p className="mt-6 max-w-sm text-[13px] leading-relaxed text-muted">
+          Installed! You can open Pitstop from your apps whenever you like.
+        </p>
+      ) : isAndroid() ? (
+        <StepList
+          steps={[
+            <>
+              Tap your browser's <span className="font-semibold text-text">⋮</span> menu
+            </>,
+            <>
+              Choose <span className="font-semibold text-text">Add to Home screen</span> (or{" "}
+              <span className="font-semibold text-text">Install app</span>)
+            </>,
+            <>
+              Confirm with <span className="font-semibold text-text">Install</span> or{" "}
+              <span className="font-semibold text-text">Add</span>
+            </>,
+          ]}
+        />
       ) : (
         <p className="mt-6 max-w-sm text-[13px] leading-relaxed text-muted">
-          {installed
-            ? "Installed! You can open Pitstop from your apps whenever you like."
-            : "On this device you can keep using Pitstop right here in the browser — installing is optional. On your phone, look for “install” or “add to home screen” in the browser menu."}
+          On this device you can keep using Pitstop right here in the browser — installing is
+          optional. On your phone, look for “install” or “add to home screen” in the browser
+          menu.
         </p>
       )}
 

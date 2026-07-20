@@ -35,6 +35,12 @@ export function isIOS(): boolean {
   );
 }
 
+/** Android phone/tablet — install lives in the browser's ⋮ menu when the
+ * one-tap prompt isn't available (Firefox, Samsung Internet, ...). */
+export function isAndroid(): boolean {
+  return /Android/i.test(navigator.userAgent);
+}
+
 /** Chromium captured an install prompt we can trigger on demand. */
 export function canPromptInstall(): boolean {
   return deferredPrompt != null;
