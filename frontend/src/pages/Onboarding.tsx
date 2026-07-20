@@ -97,7 +97,42 @@ function InstallStep() {
             </>,
           ]}
         />
-      ) : canPromptInstall() && !installed ? (
+      ) : installed ? (
+        <p className="mt-6 max-w-sm text-[13px] leading-relaxed text-muted">
+          Installed! You can open Pitstop from your apps whenever you like.
+        </p>
+      ) : isAndroid() ? (
+        <>
+          {canPromptInstall() && (
+            <>
+              <Button
+                className="mt-6"
+                onClick={async () => {
+                  if (await promptInstall()) setInstalled(true);
+                }}
+              >
+                Install Pitstop
+              </Button>
+              <p className="mt-4 text-[12px] font-medium text-muted">…or add it by hand:</p>
+            </>
+          )}
+          <StepList
+            steps={[
+              <>
+                Tap your browser's <span className="font-semibold text-text">⋮</span> menu
+              </>,
+              <>
+                Choose <span className="font-semibold text-text">Add to Home screen</span> (or{" "}
+                <span className="font-semibold text-text">Install app</span>)
+              </>,
+              <>
+                Confirm with <span className="font-semibold text-text">Install</span> or{" "}
+                <span className="font-semibold text-text">Add</span>
+              </>,
+            ]}
+          />
+        </>
+      ) : canPromptInstall() ? (
         <Button
           className="mt-6"
           onClick={async () => {
@@ -106,26 +141,6 @@ function InstallStep() {
         >
           Install Pitstop
         </Button>
-      ) : installed ? (
-        <p className="mt-6 max-w-sm text-[13px] leading-relaxed text-muted">
-          Installed! You can open Pitstop from your apps whenever you like.
-        </p>
-      ) : isAndroid() ? (
-        <StepList
-          steps={[
-            <>
-              Tap your browser's <span className="font-semibold text-text">⋮</span> menu
-            </>,
-            <>
-              Choose <span className="font-semibold text-text">Add to Home screen</span> (or{" "}
-              <span className="font-semibold text-text">Install app</span>)
-            </>,
-            <>
-              Confirm with <span className="font-semibold text-text">Install</span> or{" "}
-              <span className="font-semibold text-text">Add</span>
-            </>,
-          ]}
-        />
       ) : (
         <p className="mt-6 max-w-sm text-[13px] leading-relaxed text-muted">
           On this device you can keep using Pitstop right here in the browser — installing is
